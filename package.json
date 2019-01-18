@@ -12,6 +12,8 @@
     "pretest:unit": "rimraf .testresults/unit .coverage/unit",
     "test:component": "mocha --opts test/component/mocha.opts",
     "pretest:component": "rimraf .testresults/component .coverage/component",
+    "test:functional": "mocha --opts test/functional/mocha.opts",
+    "pretest:functional": "rimraf .testresults/functional .coverage/functional",
     "coverage": "nyc --report-dir .coverage/unit --check-coverage false npm run test:unit",
     "coverage:enforce": "nyc --report-dir .coverage/unit npm run test:unit",
     "coverage:open": "npm run coverage && opn .coverage/unit/index.html",

@@ -12,7 +12,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is null and outputFilePath is null', async () => {
         try {
-            await index.transform(null, null);
+            await index.transformCoberturaThreeToFour(null, null);
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidInputFileErrorMessage);
@@ -21,7 +21,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is null and outputFilePath is undefined', async () => {
         try {
-            await index.transform(null, undefined);
+            await index.transformCoberturaThreeToFour(null, undefined);
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidInputFileErrorMessage);
@@ -30,7 +30,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is null and outputFilePath is empty string', async () => {
         try {
-            await index.transform(null, '');
+            await index.transformCoberturaThreeToFour(null, '');
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidInputFileErrorMessage);
@@ -39,7 +39,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is null and outputFilePath is valid string', async () => {
         try {
-            await index.transform(null, validOutputFilePath);
+            await index.transformCoberturaThreeToFour(null, validOutputFilePath);
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidInputFileErrorMessage);
@@ -48,7 +48,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is undefined and outputFilePath is null', async () => {
         try {
-            await index.transform(undefined, null);
+            await index.transformCoberturaThreeToFour(undefined, null);
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidInputFileErrorMessage);
@@ -57,7 +57,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is undefined and outputFilePath is undefined', async () => {
         try {
-            await index.transform(undefined, undefined);
+            await index.transformCoberturaThreeToFour(undefined, undefined);
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidInputFileErrorMessage);
@@ -66,7 +66,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is undefined and outputFilePath is empty string', async () => {
         try {
-            await index.transform(undefined, '');
+            await index.transformCoberturaThreeToFour(undefined, '');
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidInputFileErrorMessage);
@@ -75,7 +75,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is undefined and outputFilePath is valid string', async () => {
         try {
-            await index.transform(undefined, validOutputFilePath);
+            await index.transformCoberturaThreeToFour(undefined, validOutputFilePath);
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidInputFileErrorMessage);
@@ -84,7 +84,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is empty string and outputFilePath is null', async () => {
         try {
-            await index.transform('', null);
+            await index.transformCoberturaThreeToFour('', null);
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidInputFileErrorMessage);
@@ -93,7 +93,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is empty string and outputFilePath is undefined', async () => {
         try {
-            await index.transform('', undefined);
+            await index.transformCoberturaThreeToFour('', undefined);
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidInputFileErrorMessage);
@@ -102,7 +102,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is empty string and outputFilePath is empty string', async () => {
         try {
-            await index.transform('', '');
+            await index.transformCoberturaThreeToFour('', '');
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidInputFileErrorMessage);
@@ -111,7 +111,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is empty string and outputFilePath is valid string', async () => {
         try {
-            await index.transform('', validOutputFilePath);
+            await index.transformCoberturaThreeToFour('', validOutputFilePath);
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidInputFileErrorMessage);
@@ -120,7 +120,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is a valid string and outputFilePath is null', async () => {
         try {
-            await index.transform(validInputFilePath, null);
+            await index.transformCoberturaThreeToFour(validInputFilePath, null);
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidOutputFileErrorMessage);
@@ -129,7 +129,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is a valid string and outputFilePath is undefined', async () => {
         try {
-            await index.transform(validInputFilePath, undefined);
+            await index.transformCoberturaThreeToFour(validInputFilePath, undefined);
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidOutputFileErrorMessage);
@@ -138,7 +138,7 @@ suite('invalid parameters Tests:', () => {
 
     test('Should reject when inputFilePath is a valid string and outputFilePath is empty string', async () => {
         try {
-            await index.transform(validInputFilePath, '');
+            await index.transformCoberturaThreeToFour(validInputFilePath, '');
             assert.isFalse(true);
         } catch (err) {
             assert.deepEqual(err.message, invalidOutputFileErrorMessage);

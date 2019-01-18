@@ -36,11 +36,36 @@ const parseXml = (xml) => new Promise((resolve, reject) => {
     });
 });
 
-const convertCoberturaFromThreeToFour = (coberturaThreeReport) => {
+const convertCoberturaFromThreeToFour = (coberturaReport) => {
+    if (!coberturaReport || !coberturaReport.coverage || !coberturaReport.coverage.packages) {
+        throw new Error('Invalid Cobertura XML. XML must comply with http://cobertura.sourceforge.net/xml/coverage-03.dtd');
+    }
+    let coveredLines = 0;
+    let totalLines = 0;
 
+    coberturaReport.coverage.packages.forEach(packageNode => {
+        packageNode.package.forEach(packageArrayNode => {
+            packageArrayNode.classes.forEach(classesArrayNode => {
+                classesArrayNode.class.forEach(classArrayNode => {
+                    classArrayNode.lines.forEach(linesArrayNode => {
+                        linesArrayNode.line.forEach(line => {
+                            totalLines++;
+                            if (line['$'].hits > 0) {
+                                coveredLines++;
+                            }
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+    coberturaReport.coverage['$']['lines-valid'] = totalLines;
+    coberturaReport.coverage['$']['lines-covered'] = coveredLines;
 };
 
-const transform = (inputFilePath, outputFilePath) => new Promise(async (resolve, reject) => {
+// eslint-disable-next-line max-statements
+const transformCoberturaThreeToFour = (inputFilePath, outputFilePath) => new Promise(async (resolve, reject) => {
     if (!inputFilePath || typeof inputFilePath !== 'string') {
         return reject(new Error('Invalid value specified for inputFilePath. inputFilePath must be a string'));
     }
@@ -50,10 +75,10 @@ const transform = (inputFilePath, outputFilePath) => new Promise(async (resolve,
     }
 
     try {
-        const inputFileContents = await loadFileContents(inputFilePath);
-        const inputCoberturaReport = await parseXml(inputFileContents);
-        const coberturaFourReport = convertCoberturaFromThreeToFour(inputCoberturaReport);
-        await writeToFile(outputFilePath, coberturaFourReport);
+        const fileContents = await loadFileContents(inputFilePath);
+        const coberturaReport = await parseXml(fileContents);
+        convertCoberturaFromThreeToFour(coberturaReport);
+        await writeToFile(outputFilePath, coberturaReport);
         resolve();
     } catch (err) {
         let errorMessage = `Failed to transform file: ${inputFilePath}.`;
@@ -65,5 +90,5 @@ const transform = (inputFilePath, outputFilePath) => new Promise(async (resolve,
 });
 
 module.exports = {
-    transform
+    transformCoberturaThreeToFour
 };

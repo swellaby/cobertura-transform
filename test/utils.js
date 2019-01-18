@@ -12,6 +12,8 @@ const transformFailureFullErrorMessage = (details, filePath) => `${transformFail
 const defaultTransformFailureErrorMessageDetails = 'oh nose!';
 const defaultTransformFailureFullErrorMessage = transformFailureFullErrorMessage(defaultTransformFailureErrorMessageDetails, validInputFilePath);
 
+const sampleInputContents = '<xml></xml>';
+
 module.exports = {
     validInputFilePath,
     validOutputFilePath,
@@ -21,5 +23,6 @@ module.exports = {
     defaultTransformFailureBaseErrorMessage,
     transformFailureFullErrorMessage,
     defaultTransformFailureErrorMessageDetails,
-    defaultTransformFailureFullErrorMessage
+    defaultTransformFailureFullErrorMessage,
+    sampleInputContents
 };
