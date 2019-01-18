@@ -27,7 +27,6 @@ const writeToFile = (filePath, reportObject) => new Promise((resolve, reject) =>
 
 const parseXml = (xml) => new Promise((resolve, reject) => {
     const parser = new Parser();
-    parser.
     parser.parseString(xml, (err, result) => {
         if (err) {
             return reject(err);
@@ -42,6 +41,14 @@ const convertCoberturaFromThreeToFour = (coberturaThreeReport) => {
 };
 
 const transform = (inputFilePath, outputFilePath) => new Promise(async (resolve, reject) => {
+    if (!inputFilePath || typeof inputFilePath !== 'string') {
+        return reject(new Error('Invalid value specified for inputFilePath. inputFilePath must be a string'));
+    }
+
+    if (!outputFilePath || typeof outputFilePath !== 'string') {
+        return reject(new Error('Invalid value specified for outputFilePath. outputFilePath must be a string'));
+    }
+
     try {
         const inputFileContents = await loadFileContents(inputFilePath);
         const inputCoberturaReport = await parseXml(inputFileContents);
@@ -49,7 +56,11 @@ const transform = (inputFilePath, outputFilePath) => new Promise(async (resolve,
         await writeToFile(outputFilePath, coberturaFourReport);
         resolve();
     } catch (err) {
-        return reject(err);
+        let errorMessage = `Failed to transform file: ${inputFilePath}.`;
+        if (err && err.message) {
+            errorMessage += ` Details: ${err.message}`;
+        }
+        return reject(new Error(errorMessage));
     }
 });
 

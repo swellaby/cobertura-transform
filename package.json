@@ -2,9 +2,23 @@
   "name": "cobertura-transform",
   "version": "0.0.1",
   "description": "Utility to transform Cobertura 3 reports to Cobertura 4 format",
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
-    "test": "npm run test:unit"
+    "clean": "rimraf .testresults .coverage",
+    "lint": "eslint **/*.js",
+    "test": "npm run test:unit",
+    "test:all": "npm run test:unit && npm run test:component",
+    "test:unit": "mocha --opts test/unit/mocha.opts",
+    "pretest:unit": "rimraf .testresults/unit .coverage/unit",
+    "test:component": "mocha --opts test/component/mocha.opts",
+    "pretest:component": "rimraf .testresults/component .coverage/component",
+    "coverage": "nyc --report-dir .coverage/unit --check-coverage false npm run test:unit",
+    "coverage:enforce": "nyc --report-dir .coverage/unit npm run test:unit",
+    "coverage:open": "npm run coverage && opn .coverage/unit/index.html",
+    "coverage:component": "nyc --report-dir .coverage/component --check-coverage false npm run test:component",
+    "coverage:component:enforce": "nyc --report-dir .coverage/component npm run test:component",
+    "coverage:component:open": "npm run coverage:component && opn .coverage/component/index.html"
+
   },
   "repository": {
     "type": "git",
