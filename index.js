@@ -92,7 +92,9 @@ const transformCoberturaThreeToFour = (inputFilePath, outputFilePath) => new Pro
         parseXml(fileContents).then(coberturaReport => {
             try {
                 convertCoberturaFromThreeToFour(coberturaReport);
-                writeToFile(outputFilePath, coberturaReport).then(() => resolve());
+                writeToFile(outputFilePath, coberturaReport)
+                    .then(() => resolve())
+                    .catch((err) => reject(buildTransformFailureError(err, inputFilePath)));
             } catch (err) {
                 return reject(buildTransformFailureError(err, inputFilePath));
             }
