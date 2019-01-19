@@ -50,4 +50,75 @@ suite('parseXml Tests:', () => {
             assert.isFalse(writeFileStub.called);
         }
     });
+
+    suite('invalid XML', () => {
+        const invalidCoberturaFullErrorMessage = utils.invalidCoberturaXmlFullErrorMessage;
+
+        test('Should reject with error when parsed XML is null', async () => {
+            parseStringStub.yields(null, null);
+            try {
+                await index.transformCoberturaThreeToFour(validInputFilePath, validOutputFilePath);
+                assert.isFalse(true);
+            } catch (err) {
+                assert.deepEqual(err.message, invalidCoberturaFullErrorMessage);
+                assert.isFalse(writeFileStub.called);
+            }
+        });
+
+        test('Should reject with error when parsed XML is undefined', async () => {
+            parseStringStub.yields(null, undefined);
+            try {
+                await index.transformCoberturaThreeToFour(validInputFilePath, validOutputFilePath);
+                assert.isFalse(true);
+            } catch (err) {
+                assert.deepEqual(err.message, invalidCoberturaFullErrorMessage);
+                assert.isFalse(writeFileStub.called);
+            }
+        });
+
+        test('Should reject with error when parsed XML is missing coverage node', async () => {
+            parseStringStub.yields(null, {});
+            try {
+                await index.transformCoberturaThreeToFour(validInputFilePath, validOutputFilePath);
+                assert.isFalse(true);
+            } catch (err) {
+                assert.deepEqual(err.message, invalidCoberturaFullErrorMessage);
+                assert.isFalse(writeFileStub.called);
+            }
+        });
+
+        test('Should reject with error when parsed XML is missing packages node', async () => {
+            parseStringStub.yields(null, { coverage: {} });
+            try {
+                await index.transformCoberturaThreeToFour(validInputFilePath, validOutputFilePath);
+                assert.isFalse(true);
+            } catch (err) {
+                assert.deepEqual(err.message, invalidCoberturaFullErrorMessage);
+                assert.isFalse(writeFileStub.called);
+            }
+        });
+
+
+        test('Should reject with error when parsed XML packages node is null', async () => {
+            parseStringStub.yields(null, { coverage: { packages: null } });
+            try {
+                await index.transformCoberturaThreeToFour(validInputFilePath, validOutputFilePath);
+                assert.isFalse(true);
+            } catch (err) {
+                assert.deepEqual(err.message, invalidCoberturaFullErrorMessage);
+                assert.isFalse(writeFileStub.called);
+            }
+        });
+
+        test('Should reject with error when parsed XML packages node is not an array', async () => {
+            parseStringStub.yields(null, { coverage: { packages: 2 } });
+            try {
+                await index.transformCoberturaThreeToFour(validInputFilePath, validOutputFilePath);
+                assert.isFalse(true);
+            } catch (err) {
+                assert.deepEqual(err.message, invalidCoberturaFullErrorMessage);
+                assert.isFalse(writeFileStub.called);
+            }
+        });
+    });
 });

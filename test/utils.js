@@ -11,6 +11,8 @@ const defaultTransformFailureBaseErrorMessage = transformFailureBaseErrorMessage
 const transformFailureFullErrorMessage = (details, filePath) => `${transformFailureBaseErrorMessage(filePath)} Details: ${details}`;
 const defaultTransformFailureErrorMessageDetails = 'oh nose!';
 const defaultTransformFailureFullErrorMessage = transformFailureFullErrorMessage(defaultTransformFailureErrorMessageDetails, validInputFilePath);
+const invalidCoberturaXmlErrorMessageDetails = 'Invalid Cobertura XML. XML must comply with http://cobertura.sourceforge.net/xml/coverage-03.dtd';
+const invalidCoberturaXmlFullErrorMessage = transformFailureFullErrorMessage(invalidCoberturaXmlErrorMessageDetails, validInputFilePath);
 
 const sampleInputContents = '<xml></xml>';
 
@@ -24,5 +26,7 @@ module.exports = {
     transformFailureFullErrorMessage,
     defaultTransformFailureErrorMessageDetails,
     defaultTransformFailureFullErrorMessage,
-    sampleInputContents
+    sampleInputContents,
+    invalidCoberturaXmlErrorMessageDetails,
+    invalidCoberturaXmlFullErrorMessage
 };

@@ -37,7 +37,7 @@ const parseXml = (xml) => new Promise((resolve, reject) => {
 });
 
 const convertCoberturaFromThreeToFour = (coberturaReport) => {
-    if (!coberturaReport || !coberturaReport.coverage || !coberturaReport.coverage.packages) {
+    if (!coberturaReport || !coberturaReport.coverage || !Array.isArray(coberturaReport.coverage.packages)) {
         throw new Error('Invalid Cobertura XML. XML must comply with http://cobertura.sourceforge.net/xml/coverage-03.dtd');
     }
     let coveredLines = 0;
@@ -64,8 +64,17 @@ const convertCoberturaFromThreeToFour = (coberturaReport) => {
     coberturaReport.coverage['$']['lines-covered'] = coveredLines;
 };
 
+const buildTransformFailureError = (err, inputFilePath) => {
+    let errorMessage = `Failed to transform file: ${inputFilePath}.`;
+    if (err && err.message) {
+        errorMessage += ` Details: ${err.message}`;
+    }
+
+    return new Error(errorMessage);
+};
+
 // eslint-disable-next-line max-statements
-const transformCoberturaThreeToFour = (inputFilePath, outputFilePath) => new Promise(async (resolve, reject) => {
+const transformCoberturaThreeToFour = (inputFilePath, outputFilePath) => new Promise((resolve, reject) => {
     if (!inputFilePath || typeof inputFilePath !== 'string') {
         return reject(new Error('Invalid value specified for inputFilePath. inputFilePath must be a string'));
     }
@@ -74,19 +83,20 @@ const transformCoberturaThreeToFour = (inputFilePath, outputFilePath) => new Pro
         return reject(new Error('Invalid value specified for outputFilePath. outputFilePath must be a string'));
     }
 
-    try {
-        const fileContents = await loadFileContents(inputFilePath);
-        const coberturaReport = await parseXml(fileContents);
-        convertCoberturaFromThreeToFour(coberturaReport);
-        await writeToFile(outputFilePath, coberturaReport);
-        resolve();
-    } catch (err) {
-        let errorMessage = `Failed to transform file: ${inputFilePath}.`;
-        if (err && err.message) {
-            errorMessage += ` Details: ${err.message}`;
-        }
-        return reject(new Error(errorMessage));
-    }
+    loadFileContents(inputFilePath).then(fileContents => {
+        parseXml(fileContents).then(coberturaReport => {
+            try {
+                convertCoberturaFromThreeToFour(coberturaReport);
+                writeToFile(outputFilePath, coberturaReport).then(() => resolve());
+            } catch (err) {
+                return reject(buildTransformFailureError(err, inputFilePath));
+            }
+        }).catch(err => {
+            return reject(buildTransformFailureError(err, inputFilePath));
+        });
+    }).catch(err => {
+        return reject(buildTransformFailureError(err, inputFilePath));
+    });
 });
 
 module.exports = {

@@ -1,6 +1,6 @@
 {
   "name": "cobertura-transform",
-  "version": "0.0.1",
+  "version": "0.3.0",
   "description": "Utility to transform Cobertura 3 reports to Cobertura 4 format",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,6 @@
     "coverage:component": "nyc --report-dir .coverage/component --check-coverage false npm run test:component",
     "coverage:component:enforce": "nyc --report-dir .coverage/component npm run test:component",
     "coverage:component:open": "npm run coverage:component && opn .coverage/component/index.html"
-
   },
   "repository": {
     "type": "git",
@@ -64,9 +63,6 @@
     "sinon": "^7.2.2"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
-    "commander": "^2.19.0",
-    "fancy-log": "^1.3.3",
     "xml2js": "^0.4.19"
   }
 }
