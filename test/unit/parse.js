@@ -11,6 +11,7 @@ const utils = require('../utils');
 suite('parseXml Tests:', () => {
     let writeFileStub;
     let parseStringStub;
+    let buildObjectStub;
     const validInputFilePath = utils.validInputFilePath;
     const validOutputFilePath = utils.validOutputFilePath;
     const fullErrorMessage = utils.defaultTransformFailureFullErrorMessage;
@@ -19,7 +20,7 @@ suite('parseXml Tests:', () => {
     const contents = utils.sampleInputContents;
 
     setup(() => {
-        sinon.stub(Builder.prototype, 'buildObject');
+        buildObjectStub = sinon.stub(Builder.prototype, 'buildObject');
         parseStringStub = sinon.stub(Parser.prototype, 'parseString').yields(null, {});
         writeFileStub = sinon.stub(fs, 'writeFile').yields(null);
         sinon.stub(fs, 'readFile').yields(null, contents);
@@ -119,6 +120,23 @@ suite('parseXml Tests:', () => {
                 assert.deepEqual(err.message, invalidCoberturaFullErrorMessage);
                 assert.isFalse(writeFileStub.called);
             }
+        });
+    });
+
+    suite('valid XML', () => {
+        test('Should handle XML with an empty packages node', async () => {
+            parseStringStub.yields(null, utils.emptyPackagesCoberturaReport);
+            await index.transformCoberturaThreeToFour(validInputFilePath, validOutputFilePath);
+            assert.isTrue(buildObjectStub.calledWithExactly(utils.emptyPackagesCoberturaReport));
+        });
+
+        test('Should handle valid Cobertura 3 report', async () => {
+            const report = utils.getReportCopy();
+            parseStringStub.yields(null, report);
+            await index.transformCoberturaThreeToFour(validInputFilePath, validOutputFilePath);
+            assert.deepEqual(report.coverage.$['lines-valid'], 20);
+            assert.deepEqual(report.coverage.$['lines-covered'], 17);
+            assert.isTrue(buildObjectStub.calledWithExactly(report));
         });
     });
 });

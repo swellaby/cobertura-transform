@@ -7,13 +7,29 @@
     ".nyc_output": true,
     "**/*.tgz": true
   },
+  "files.associations": {
+    "*azure-pipelines*": "azure-pipelines"
+  },
+  "vsicons.associations.files": [
+    {
+      "icon": "azurepipelines",
+      "extensions": [
+        "azure-pipelines.linux-pr.yml",
+        "azure-pipelines.mac-pr.yml",
+        "azure-pipelines.windows-pr.yml",
+        "azure-pipelines.ci.yml",
+      ],
+      "filename": true,
+      "format": "svg"
+    }
+  ],
   "cSpell.enabled": true,
   "cSpell.ignorePaths": [
     "**/node_modules/**",
     "**/.git/**",
     ".vscode",
     "package-lock.json"
-],
+  ],
   "cSpell.enabledLanguageIds": [
     "asciidoc",
     "html",

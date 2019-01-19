@@ -73,7 +73,12 @@ const buildTransformFailureError = (err, inputFilePath) => {
     return new Error(errorMessage);
 };
 
-// eslint-disable-next-line max-statements
+/**
+ * Transforms a Cobertura 3 Report to the Cobertura 4 Format.
+ *
+ * @param {string} inputFilePath - The file path to the existing Cobertura 3 report.
+ * @param {string} outputFilePath - The file path to write the transformed Cobertura 4 report.
+ */
 const transformCoberturaThreeToFour = (inputFilePath, outputFilePath) => new Promise((resolve, reject) => {
     if (!inputFilePath || typeof inputFilePath !== 'string') {
         return reject(new Error('Invalid value specified for inputFilePath. inputFilePath must be a string'));
@@ -91,9 +96,7 @@ const transformCoberturaThreeToFour = (inputFilePath, outputFilePath) => new Pro
             } catch (err) {
                 return reject(buildTransformFailureError(err, inputFilePath));
             }
-        }).catch(err => {
-            return reject(buildTransformFailureError(err, inputFilePath));
-        });
+        }).catch(err => reject(buildTransformFailureError(err, inputFilePath)));
     }).catch(err => {
         return reject(buildTransformFailureError(err, inputFilePath));
     });
