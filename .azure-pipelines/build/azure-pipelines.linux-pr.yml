@@ -14,7 +14,7 @@ steps:
 - script: npm run build
   displayName: 'Run npm build script'
 
-- task: PublishTestResults@1
+- task: PublishTestResults@2
   inputs:
     testRunner: JUnit
     testResultsFiles: .testresults/unit/xunit.xml
@@ -23,7 +23,7 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: .coverage/unit/cobertura-coverage.xml
-    reportDirectory: .coverage/unit
+    summaryFileLocation: $(Build.SourcesDirectory)/.coverage/unit/cobertura-coverage.xml
+    reportDirectory: $(Build.SourcesDirectory)/.coverage/unit
     failIfCoverageEmpty: true
   displayName: 'Publish coverage results'
