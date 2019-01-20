@@ -23,7 +23,7 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '.coverage/unit/cobertura-coverage.xml'
-    reportDirectory: '.coverage/unit'
+    summaryFileLocation: .coverage/unit/cobertura-coverage.xml
+    reportDirectory: .coverage/unit
     failIfCoverageEmpty: true
   displayName: 'Publish coverage results'
