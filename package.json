@@ -55,7 +55,7 @@
     "@swellaby/eslint-config": "^2.0.0",
     "@swellaby/nyc-config": "^1.1.1",
     "chai": "^4.2.0",
-    "eslint": "^5.16.0",
+    "eslint": "^6.0.0",
     "husky": "^2.1.0",
     "mocha": "^6.1.4",
     "mocha-multi-reporters": "^1.1.7",
