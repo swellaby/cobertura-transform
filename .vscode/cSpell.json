@@ -1,17 +1,18 @@
 {
-    "version": "0.1",
-    "language": "en",
-    "words": [
-      "cobertura",
-      "lcov",
-      "opensource",
-      "sonarqube",
-      "swellaby",
-      "tagless",
-      "testresults",
-      "xunit"
-    ],
-    "flagWords": [
+  "version": "0.1",
+  "language": "en",
+  "words": [
+    "cobertura",
+    "lcov",
+    "mocharc",
+    "opensource",
+    "sonarqube",
+    "swellaby",
+    "tagless",
+    "testresults",
+    "xunit"
+  ],
+  "flagWords": [
 
-    ]
+  ]
 }
