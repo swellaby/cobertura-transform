@@ -20,11 +20,6 @@ steps:
   inputs:
     version: 14.x
 
-- script: |
-    npm install -g npm@6.9.0
-    npm run prepare - successful
-  displayName: 'Temp npm version set'
-
 - template: templates/yml/node/combo/npm-build-validation-xunit-cobertura.yml@templates
   parameters:
     publishTestResults:
