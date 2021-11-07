@@ -16,12 +16,9 @@ resources:
 
 steps:
 - task: UseNode@1
-  displayName: 'Use Node 10.x'
-
-- script: |
-    npm install -g npm@6.9.0
-    npm run prepare - successful
-  displayName: 'Temp npm version set'
+  displayName: 'Use Node 14.x'
+  inputs:
+    version: 14.x
 
 - template: templates/yml/node/combo/npm-build-validation-xunit-cobertura.yml@templates
   parameters:

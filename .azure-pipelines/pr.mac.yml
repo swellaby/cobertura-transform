@@ -16,9 +16,9 @@ resources:
 
 steps:
 - task: UseNode@1
-  displayName: 'Use Node 10.x'
+  displayName: 'Use Node 14.x'
   inputs:
-    version: 10.x
+    version: 14.x
 
 - template: templates/yml/node/combo/npm-build-validation-xunit-cobertura.yml@templates
   parameters:
